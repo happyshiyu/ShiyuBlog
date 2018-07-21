@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.shiyu.mapper.LikeMapper">
+	<select id="findByAid" parameterType="Integer" resultType="cn.shiyu.entity.Like">
+		SELECT * FROM like WHERE aid = #{aid};
+	</select>
+	
+	<select id="findByUidAndAid" parameterType="Integer" resultType="cn.shiyu.entity.Like">
+		SELECT * FROM like WHERE aid = #{aid} AND uid = #{uid};
+	</select>
+	
+	<insert id="addLike" parameterType="Integer">
+		INSERT INTO
+		like(aid,uid)
+		VALUE(#{aid},#{uid});
+	</insert>
+	
+	<delete id="deleteByUidAndAid" parameterType="Integer">
+		DELETE FROM like WHERE aid = #{aid} AND uid = #{uid};
+	</delete>
+</mapper>

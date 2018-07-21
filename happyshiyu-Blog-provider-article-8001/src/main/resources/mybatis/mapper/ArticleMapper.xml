@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.shiyu.mapper.ArticleMapper">
+	<!--根据id查询得到一个Article对象 -->
+	<select id="findById" parameterType="Integer" resultType="cn.shiyu.entity.Article">
+		SELECT * FROM article WHERE id = #{id};
+	</select>
+	
+	<!--根据用户id分页查询得到Article列表 -->
+	<select id="findByAuthorId" parameterType="Integer" resultType="cn.shiyu.entity.Article">
+		SELECT * FROM article WHERE authorId = #{id}
+		LIMIT #{begin},#{pageSize};
+	</select>
+	
+	<!-- 查询所有的文章 -->
+	<select id="findAll" resultType="cn.shiyu.entity.Article">
+		SELECT * FROM article;
+	</select>
+	
+	<!-- 添加文章 -->
+	<insert id="addArticle" parameterType="cn.shiyu.entity.Article">
+		<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+		INSERT INTO 
+		article(id,title,summary,content,category,label,createTime,authorId)
+		VALUE(#{id},#{title},#{summary},#{content},#{category},#{label},#{createTime},#{authorId});
+	</insert>
+	
+	<!-- 编辑文章 -->
+	<update id="updateArticle" parameterType="cn.shiyu.entity.Article" >
+		UPDATE article
+		SET title = #{title}, summary = #{summary},content = #{content},
+		category = #{category}, label = #{label}
+		WHERE id = #{id};
+	</update>
+</mapper>

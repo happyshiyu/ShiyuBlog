@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.shiyu.mapper.CommentChildMapper">
+	<select id="findByCommentId" parameterType="Integer" resultType="cn.shiyu.entity.CommentChild">
+		SELECT * FROM comment_child WHERE comment_id = #{cid};
+	</select>
+	
+	<insert id="addCommentChild" parameterType="cn.shiyu.entity.CommentChild">
+		<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+		INSERT INTO
+		comment_child(comment_id,content,user_id,to_id,createTime);
+		VALUE(#{comment_id},#{content},#{user_id},#{to_id},#{createTime});
+	</insert>
+	
+	<delete id="deleteCommentChild" parameterType="Integer">
+		DELETE FROM comment_child WHERE id = #{id};
+	</delete>
+</mapper>
